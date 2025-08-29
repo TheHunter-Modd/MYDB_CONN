@@ -4,3 +4,40 @@ SELECT username, email FROM users WHERE id = 3;
 SELECT username, comment_text FROM comments WHERE users_id = 3;
 SELECT * FROM users INNER JOIN 	comments ON users.id = comments.users_id;
 SELECT users.username, comments.comment_text, comments.created_at FROM users INNER JOIN 	comments ON users.id = comments.users_id;
+
+
+
+// General hashing when it comes to password hashing (using salt and pepper)
+
+$sesitiveData = 'Oyeleke';
+$salt = bin2hex(random_bytes(16)); //Generate random salt
+$pepper = "ASecretPepperString";  
+//echo "<br>". $salt;     
+
+$dataTOHash = $sesitiveData. $salt. $pepper;
+$hash = hash('sha256',$dataTOHash );
+
+//echo "<br>". $hash;
+
+/*-----*/
+$sesitiveData = 'Oyeleke';
+
+$storedSalt = $salt;
+$storedHash = $hash;
+$pepper = "ASecretPepperString";
+
+$dataTOHash = $sesitiveData. $storedSalt. $pepper;
+
+$verificationHash = hash('sha256',$dataTOHash );
+
+
+if ($storedHash === $verificationHash) {
+    echo "The data are the same!";
+    echo "<br>";
+    echo $storedHash;
+    echo "<br>";
+    echo $verificationHash;
+}
+else {
+    echo "The data are NOT the same!";
+}

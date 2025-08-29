@@ -1,5 +1,7 @@
 <?php
 
+// General hashing when it comes to password hashing (using salt and pepper)
+
 $sesitiveData = 'Oyeleke';
 $salt = bin2hex(random_bytes(16)); //Generate random salt
 $pepper = "ASecretPepperString";  
