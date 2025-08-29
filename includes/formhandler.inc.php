@@ -16,10 +16,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //Named parameterized query
         $query ="INSERT INTO users (username, pwd, email) VALUES (:username, :pwd, :email);";
 
+        $options = [
+    'cost' => 12,
+];
+
+$hashedPwd = password_hash($pwd, PASSWORD_BCRYPT, $options);
+
 
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':pwd', $pwd);
+        $stmt->bindParam(':pwd', $hashedPwd);
         $stmt->bindParam(':email', $email);
         
         $stmt->execute();
